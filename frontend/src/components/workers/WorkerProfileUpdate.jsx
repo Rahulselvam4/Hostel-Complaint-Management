@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const WorkerProfileUpdate = () => {
   const [editMode, setEditMode] = useState(false);
-
   const [user, setUser] = useState({});
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

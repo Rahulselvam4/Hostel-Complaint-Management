@@ -1,0 +1,61 @@
+issueCategory,description,priority
+Electrical,Fan not working,High
+Plumbing,Water leaking from tap,High
+Electrical,Socket exploded,Emergency
+Cleaning,Dust in corridor,Low
+Electrical,Light flickering,High
+Plumbing,No water supply in bathroom,High
+Carpentry,Broken chair in study room,Medium
+Cleaning,Foul smell from washroom,Medium
+Electrical,Electric shock from switch,Emergency
+Plumbing,Toilet clogged,High
+Carpentry,Door not closing properly,Medium
+Cleaning,Garbage not collected,Low
+Electrical,Smoke from socket,Emergency
+Plumbing,Tap burst and water leaking badly,Emergency
+Cleaning,Unclean floor in mess,Low
+Electrical,Short circuit in room,Emergency
+Plumbing,Sink is blocked,High
+Carpentry,Window pane broken,Medium
+Electrical,Tube light not working,High
+Cleaning,Too much dust under bed,Low
+Electrical,Sparks coming from fan,Emergency
+Plumbing,Leak in bathroom ceiling,High
+Cleaning,Cobwebs in corner of room,Low
+Carpentry,Bed is creaking,Medium
+Electrical,Power outage in room,High
+Plumbing,Flush not working,High
+Cleaning,Dirty staircase,Low
+Electrical,Plug point loose,Medium
+Plumbing,Water heater not working,High
+Cleaning,Mosquitoes due to stagnant water,High
+Electrical,Room fan sparks when turned on,Emergency
+Plumbing,Pipe under sink is leaking,High
+Cleaning,Mess hall is not swept properly,Low
+Carpentry,Bed frame is broken,Medium
+Electrical,Power keeps tripping,High
+Plumbing,Water gushing out from broken pipe,Emergency
+Cleaning,Trash can overflowing,Low
+Carpentry,Table leg is loose,Medium
+Electrical,Switchboard making crackling noise,Emergency
+Plumbing,No hot water from geyser,High
+Cleaning,Water stagnation in corner,High
+Carpentry,Wardrobe door detached,Medium
+Electrical,Wire exposed near plug point,Emergency
+Plumbing,Sink water not draining,High
+Cleaning,Common area not cleaned in days,Medium
+Carpentry,Window doesn't close,Medium
+Electrical,Room plunged into darkness due to fault,High
+Plumbing,Water dripping continuously,High
+Cleaning,Washroom stinks,Low
+Carpentry,Study table drawer jammed,Medium
+Electrical,Short spark from tube light,High
+Plumbing,Seepage in the wall from pipe,High
+Cleaning,Toilet not flushed by previous user,Low
+Carpentry,Broken shelf in cupboard,Medium
+Electrical,Heavy spark during switch operation,Emergency
+Plumbing,Bathroom drain clogged,High
+Cleaning,Stains on floor not cleaned,Low
+Carpentry,Loose screws on bed,Medium
+Electrical,Exposed wires near light,Emergency
+Cleaning,Windows not cleaned for weeks,Low

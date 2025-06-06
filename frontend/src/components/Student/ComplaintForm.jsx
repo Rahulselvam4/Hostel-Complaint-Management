@@ -18,6 +18,8 @@ const ComplaintForm = () => {
     }
   }, []);
 
+  const [loading, setLoading] = useState(false);  // Add loading state
+
   const [issueCategory, setIssueCategory] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
@@ -44,7 +46,7 @@ const ComplaintForm = () => {
         navigate("/");
         return;
       }
-
+      setLoading(true);
       const formData = new FormData();
       formData.append("issueCategory", issueCategory);
       formData.append("location", location);
@@ -173,9 +175,10 @@ const ComplaintForm = () => {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full bg-[#a80000] hover:bg-[#800000] text-white font-medium py-2 px-4 rounded-md"
+              className={`w-full ${loading ? 'bg-gray-400' : 'bg-[#a80000]'} hover:bg-[#800000] text-white font-medium py-2 px-4 rounded-md`}
+              disabled={loading}  // Disable button when loading
             >
-              Submit Complaint
+              {loading ? 'Submitting...' : 'Submit Complaint'} {/* Button text change */}
             </button>
           </div>
         </form>
