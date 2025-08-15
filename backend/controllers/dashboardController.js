@@ -12,7 +12,7 @@ export const getDashboardSummary = async (req, res) => {
     const cachedData = await redis.get(cacheKey);
     
     if (cachedData) {
-      console.log('✅ Redis cache hit');
+      console.log('Redis cache hit');
       const parsedData = JSON.parse(cachedData);
       
       // Verify cached data structure
@@ -23,7 +23,7 @@ export const getDashboardSummary = async (req, res) => {
           data: parsedData
         });
       }
-      console.warn('⚠️ Cached data structure invalid, fetching fresh data');
+      console.warn('Cached data structure invalid, fetching fresh data');
     }
 
     // 2. Cache miss or invalid - fetch fresh data
@@ -58,7 +58,7 @@ export const getDashboardSummary = async (req, res) => {
     // 3. Cache the fresh data with validation
     try {
       await redis.set(cacheKey, JSON.stringify(summary), 'EX', 60);
-      console.log('📦 New data cached successfully');
+      console.log(' New data cached successfully');
     } catch (redisError) {
       console.error('Redis cache set error:', redisError);
     }

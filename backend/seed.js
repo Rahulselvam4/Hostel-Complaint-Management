@@ -9,7 +9,7 @@ const MONGO_URI = 'mongodb://127.0.0.1:27017/HCMSD';
 const seedData = async () => {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
 
     // Clear old data
     await Worker.deleteMany({});
@@ -72,10 +72,10 @@ const seedData = async () => {
     await Worker.insertMany(workers, { ordered: false });
     await Admin.insertOne(admin);
 
-    console.log('✅ Workers and Admin seeded successfully.');
+    console.log('Workers and Admin seeded successfully.');
     process.exit(0);
   } catch (err) {
-    console.error('❌ Seeding error:', err.message);
+    console.error('Seeding error:', err.message);
     process.exit(1);
   }
 };

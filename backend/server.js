@@ -9,8 +9,6 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 import announcementRouter from './routes/announcementRoutes.js';
 import updateRouter from './routes/updateProfileRoutes.js';
 import authRouter from './routes/auth.js';
-import logger from './utils/logger.js';
-import morgan from 'morgan';
 
 // Load environment variables
 dotenv.config();
@@ -45,18 +43,12 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong!' });
 });
-app.use(
-  morgan('combined', {
-    stream: {
-      write: (message) => logger.info(message.trim()),
-    },
-  })
-);
+
 
 
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  logger.info('Server started on port 5000');
-  // console.log(`Server running on port ${PORT}`);
+  // logger.info('Server started on port 5000');
+  console.log(`Server running on port ${PORT}`);
 });

@@ -12,9 +12,9 @@ const connectToMongoDB = async () => {
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 30000, // Increase timeout
     });
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
   } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
+    console.error('MongoDB connection error:', err);
     process.exit(1); // Exit if DB not connected
   }
 };
@@ -32,7 +32,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'unakuloruvan7@gmail.com',
-    pass: 'ipjb lgiq kzur vijc', // App password (not actual Gmail password)
+    pass: 'ipjb lgiq kzur vijc', // App password 
   },
 });
 
@@ -45,9 +45,9 @@ const sendEmail = async (to, subject, text) => {
       subject,
       text,
     });
-    console.log(`📧 Email sent to ${to}`);
+    console.log(`Email sent to ${to}`);
   } catch (error) {
-    console.error(`❌ Failed to send email to ${to}`, error);
+    console.error(`Failed to send email to ${to}`, error);
   }
 };
 
@@ -58,7 +58,7 @@ const run = async () => {
   await consumer.connect();
   await consumer.subscribe({ topic: 'complaint_created', fromBeginning: false });
 
-  console.log('✅ Kafka consumer listening for new complaints...');
+  console.log('Kafka consumer listening for new complaints...');
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
@@ -67,7 +67,7 @@ const run = async () => {
         const category = complaint.category?.toLowerCase();
 
         if (!category) {
-          console.warn('⚠️ No category found in complaint');
+          console.warn(' No category found in complaint');
           return;
         }
 
@@ -80,7 +80,7 @@ const run = async () => {
         const recipients = workers.map(worker => worker.email);
 
         if (recipients.length === 0) {
-          console.warn(`⚠️ No workers found for category: ${category}`);
+          console.warn(`No workers found for category: ${category}`);
           return;
         }
 
@@ -100,12 +100,12 @@ const run = async () => {
           await sendEmail(email, subject, text);
         }
       } catch (err) {
-        console.error('❌ Error processing Kafka message:', err);
+        console.error(' Error processing Kafka message:', err);
       }
     },
   });
 };
 
 run().catch(err => {
-  console.error('❌ Error in Kafka consumer:', err);
+  console.error(' Error in Kafka consumer:', err);
 });

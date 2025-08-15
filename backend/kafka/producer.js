@@ -13,9 +13,9 @@ const producer = kafka.producer();
 const connectProducer = async () => {
   try {
     await producer.connect();
-    console.log("✅ Kafka Producer connected");
+    console.log("Kafka Producer connected");
   } catch (error) {
-    console.error("❌ Kafka Producer connection failed:", error);
+    console.error("Kafka Producer connection failed:", error);
   }
 };
 
@@ -32,8 +32,8 @@ export const publishComplaintEvent = async (topic, data) => {
         },
       ],
     });
-    console.log(`📤 Event published to topic "${topic}"`);
+    console.log(`Event published to topic "${topic}"`);
   } catch (error) {
-    console.error(`❌ Failed to publish to Kafka topic "${topic}"`, error);
+    console.error(`Failed to publish to Kafka topic "${topic}"`, error);
   }
 };
