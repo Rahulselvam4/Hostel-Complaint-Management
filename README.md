@@ -1,108 +1,100 @@
-# 🏠 HostelMate – Complaint Management System for Hostels
-
-HostelMate is a real-time, full-stack complaint management system built specifically for hostel environments. It bridges communication between students, workers, and admin to resolve issues faster and more efficiently — all under one smart interface.
---------
-## 🚀 Features
-
-### 🎓 For Students
-- 📝 Submit new complaints
-- 📜 View history of submitted complaints
-
-### 🛠️ For Workers
-- 📂 View complaints filtered by category (e.g., Electrical, Plumbing)
-- ✅ Update status once a complaint is resolved
-
-### 👨‍💼 For Admin
-- 🕵️ View all complaints
-- 🗓️ Identify unresolved complaints older than 7 days
-- ➕ Add new workers to the system
-- 📢 Post announcements to students
+# Hostel Complaint Management System
+A MERN-stack project with **Apache Kafka** for message queuing, an **ML model** for complaint priority classification, and role-based access control (Student, Worker, Admin).
 
 ---
 
-## 🧱 Tech Stack
-
-| Layer         | Tech                             |
-|---------------|----------------------------------|
-| Frontend      | React.js + Tailwind CSS          |
-| Backend       | Node.js + Express                |
-| Database      | MongoDB                          |
-| Auth          | JWT                              |
-| Tools         | GitHub, VS Code                  |
+## Tech Stack
+- **Frontend**: React + Tailwind CSS  
+- **Backend**: Node.js + Express + MongoDB + KafkaJS  
+- **Message Queue**: Apache Kafka + Zookeeper (via Docker)  
+- **ML Model**: Python (Flask, Scikit-learn, Joblib)  
+- **Image Upload**: Cloudinary + Multer  
 
 ---
 
-## 📂 File Structure
-hostelmate/ │ 
-├── frontend/ # React + Tailwind │ 
-├── public/ │ 
-└── src/ │ 
-├── components/ │ 
-├── pages/ │ 
-├── routes/ │ 
-└── ... │ 
-├── backend/ │
-├── student-api/ # Microservice: student operations │
-├── worker-api/ # Microservice: worker operations │ 
-├── admin-api/ # Microservice: admin operations │ 
-└── shared/ # Auth, DB utils, middlewares │
+## Project Structure
+```
+HCMSystemDesign/
+│
+├── backend/                # Node.js Express backend
+│   ├── kafka/              # Kafka producer/consumer scripts
+│   ├── ml/                 # ML service (Flask API + model)
+│   └── ...                 # Other backend files
+│
+├── frontend/               # React frontend
+│
+├── docker-compose.yml      # Kafka + Zookeeper setup
 └── README.md
-
-
+```
 
 ---
 
-## 🥪 Local Setup
+## How to Run
 
-### 🔧 Prerequisites:
-- Node.js (v18+)
-- MongoDB
-- Git
+### 1. Prerequisites
+Make sure you have installed:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)  
+- [Node.js](https://nodejs.org/) (v18+ recommended)  
+- [Python](https://www.python.org/) (3.9+ recommended)  
+- [pip](https://pip.pypa.io/en/stable/)  
+- MongoDB (local or cloud like Atlas)
 
-### ⚙️ Installation
+---
 
-# 1. Clone the repo
-git clone git@github.com:your-org/hostelmate.git
+### 2. Start Kafka & Zookeeper
+From the project root:
+```
+docker compose up -d
+```
+This will start:
+- Zookeeper on port 2181
+- Kafka broker on port 9092
 
-# 2. Move into the project
-cd hostelmate
+Check if containers are running:
+```
+docker ps
+```
 
-# 3. Install frontend dependencies
-cd frontend && npm install
+### 3. Start the ML Service
+In a new terminal:
+```
+cd backend/ml
+pip install -r requirements.txt
+python predict_api.py
+```
+Expected output:
+```
+* Running on http://127.0.0.1:5000
+```
 
-# 4. Install backend services
-cd ../backend/student-api && npm install
-cd ../worker-api && npm install
-cd ../admin-api && npm install
+### 4. Start the Backend
+In a new terminal:
+```
+cd backend
+npm install
+npm start
+```
+Backend will run on:
+```
+http://localhost:4000
+```
 
-🌐 Run Locally
-# Start the frontend
-cd frontend && npm run dev
+### 5. Start the Frontend
+In a new terminal:
+```
+cd frontend
+npm install
+npm start
+```
+Frontend will run on:
+```
+http://localhost:3000
+```
 
-# Start student backend service
-cd backend/student-api && npm run dev
-
-# Start worker backend service
-cd backend/worker-api && npm run dev
-
-# Start admin backend service
-cd backend/admin-api && npm run dev
-
-
-# 🧑‍💻 Team
-### HostelMate Dev Team:
-
-🎨 Janani Sri – Frontend Developer
-
-🧠 Rahul – Backend Developer
-
-🔗 Kathir – Full Stack Integration
-
-# 📄 License
-This project is licensed under the MIT License.
-
-# 💬 Feedback & Contributions
-Found a bug? Have an idea?
-Open an issue or start a discussion — let’s collaborate with HostelMate!
-
-   
+## Startup Order
+```
+Docker Desktop → docker compose up -d(you should run the docker engine in your local machine)
+ML Service → python predict_api.py
+Backend → npm start
+Frontend → npm run dev
+```
