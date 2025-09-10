@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+function debounce(fn, delay) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), delay);
+  };
+}
 
 const ComplaintForm = () => {
   const navigate = useNavigate();
@@ -19,12 +26,44 @@ const ComplaintForm = () => {
   }, []);
 
   const [loading, setLoading] = useState(false);  // Add loading state
-
   const [issueCategory, setIssueCategory] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("Low");
   const [photo, setPhoto] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const descRef = useRef(null);
+  // Debounced fetch
+  const fetchSuggestions = debounce(async (prefix) => {
+    try {
+      if (!prefix.trim()) {
+        setSuggestions([]);
+        return;
+      }
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`http://localhost:5000/api/autocomplete?prefix=${encodeURIComponent(prefix)}&k=7`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setSuggestions(res.data || []);
+      setShowSuggestions(true);
+    } catch (err) {
+      console.error("auto err", err);
+    }
+  }, 250);
+
+  const onDescriptionChange = (e) => {
+    const v = e.target.value;
+    setDescription(v);
+    fetchSuggestions(v);
+  };
+
+  const onSuggestionClick = (s) => {
+    setDescription(s);
+    setShowSuggestions(false);
+    // focus textarea
+    descRef.current?.focus();
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -114,21 +153,34 @@ const ComplaintForm = () => {
           </div>
 
           {/* Description */}
-          <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700"
-            >
+          <div className="relative">
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
               Description<span className="text-red-500">*</span>
             </label>
             <textarea
               id="description"
+              ref={descRef}
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={onDescriptionChange}
+              onBlur={() => setTimeout(()=>setShowSuggestions(false), 150)} // allow click
+              onFocus={() => description && setShowSuggestions(true)}
               required
               placeholder="Explain the issue in detail"
               className="mt-1 w-full border border-gray-300 rounded-md px-4 py-2 min-h-[100px]"
             />
+            {showSuggestions && suggestions.length > 0 && (
+              <ul className="absolute z-50 left-0 right-0 bg-white border mt-1 max-h-40 overflow-auto rounded shadow">
+                {suggestions.map((s, idx) => (
+                  <li
+                    key={idx}
+                    onMouseDown={() => onSuggestionClick(s)} // use onMouseDown to prevent blur before click
+                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                  >
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           {/* Issue Category */}
           <div>

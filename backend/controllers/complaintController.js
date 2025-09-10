@@ -1,55 +1,8 @@
 import Complaint from "../models/Complaint.js";
 import { publishComplaintEvent } from "../kafka/producer.js";
 import cloudinary from "../utils/cloudinary.js";
-
-// const setPriority = (category, description) => {
-//   const desc = description.toLowerCase();
-
-//   // Keywords for Emergency
-//   const emergencyKeywords = [
-//     "fire", "short circuit", "burst", "electric shock",
-//     "gas leak", "flood", "broken glass", "sparking", "electrocution", "smoke", "explosion"
-//   ];
-
-//   // Keywords for High Priority
-//   const highKeywords = [
-//     "no power", "power cut", "leak", "water overflow", "choking", "sewage", 
-//     "broken pipe", "clogged drain", "water issue", "no water", "mosquito breeding", 
-//     "fan not working", "light not working", "flickering light"
-//   ];
-
-//   // Keywords for Medium Priority
-//   const mediumKeywords = [
-//     "urgent", "asap", "immediately", "soon", "emergency", 
-//     "critical", "priority", "important", "quick"
-//   ];
-
-//   // Match Emergency
-//   if (emergencyKeywords.some(word => desc.includes(word))) {
-//     return "Emergency";
-//   }
-
-//   // Match High Priority
-//   if (
-//     (category === "Electrical" && highKeywords.some(word => desc.includes(word))) ||
-//     (category === "Plumbing" && highKeywords.some(word => desc.includes(word))) ||
-//     (category === "Cleaning" && highKeywords.some(word => desc.includes(word)))
-//   ) {
-//     return "High";
-//   }
-
-//   // Match Medium Priority
-//   if (mediumKeywords.some(word => desc.includes(word))) {
-//     return "Medium";
-//   }
-
-//   // Default to Low
-//   return "Low";
-// };
-
-
 import axios from "axios";
-
+import { insertIntoTrie } from "../services/autocompleteServices.js";
 const predictPriority = async (description) => {
   try {
     const response = await axios.post("http://localhost:5001/predict", {
@@ -99,7 +52,7 @@ export const createComplaint = async (req, res) => {
       priority,
       photo: photoUrl,
     });
-
+    insertIntoTrie(description);
     // Kafka Event Publish
     await publishComplaintEvent("complaint_created", {
       complaintId: complaint._id,

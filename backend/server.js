@@ -9,6 +9,7 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 import announcementRouter from './routes/announcementRoutes.js';
 import updateRouter from './routes/updateProfileRoutes.js';
 import authRouter from './routes/auth.js';
+import autocompleteRouter from './routes/autocompleteroute.js';
 
 // Load environment variables
 dotenv.config();
@@ -31,7 +32,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/admin-announcement',announcementRouter);
 app.use('/api/updateprofile',updateRouter);
 app.use("/api/auth", authRouter);
-
+app.use("/api/autocomplete", autocompleteRouter);
 
 // Health check endpoint
 app.get('/', (req, res) => {
